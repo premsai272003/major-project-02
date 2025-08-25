@@ -1,7 +1,8 @@
-require("dotnev"),config();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const connectDB = require("./config/db");
 
 const app = express();
 
@@ -14,19 +15,27 @@ app.use(
     })
 );
 
+// Body parser
 app.use(express.json());
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-
-
-
-
 
 // Connect to MongoDB
-// the purpos eof this file is to connect the server with the database
-// and to start the server
-// we are using mongoose to connect to the mongodb database
-// we are using dotenv to manage the environment variables
-// we are using express to create the server
+connectDB();
+
+// Routes (example)
+app.get("/", (req, res) => {
+    res.send("API is running...");
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+/*
+Purpose of this file:
+- Load environment variables (dotenv)
+- Setup Express server
+- Enable CORS
+- Parse JSON requests
+- Connect MongoDB using Mongoose
+- Start the server
+*/
