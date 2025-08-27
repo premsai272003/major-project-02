@@ -7,7 +7,7 @@ import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
-  const [fullName, setFullName] = useState(""); // ✅ fixed typo (fullNmae → fullName)
+  const [fullName, setFullName] = useState(""); // fixed typo (fullNmae → fullName)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

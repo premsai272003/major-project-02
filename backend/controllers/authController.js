@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 
 // Generate JWT token
 const generateToken = (id) => {
-    return jwt.sign({id}, process.env.jwt_SECRET, {
-        expiresIn: "1h"
-    });
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 };
 
 // Register User 
@@ -39,13 +37,33 @@ exports.registerUser = async (req, res) => {
     } catch (err) {
         res 
            .status(500)
-           .json({ message: "Eerror registering user", error: err.message});
+           .json({ message: "Error registering user", error: err.message});
     }
 };
 
 // Login User
-exports.loginUser = async (req, res) => {};
+exports.loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+    try {
+        const user = await User.findOne({ email });
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
 
+        res.status(200).json({
+            id: user._id,
+            user,
+            token: generateToken(user._id),
+        });
+    } catch (err) {
+         
+        res.status(500).json({ message: "Error logging in", error: err.message });
+
+    }
+};
 // Login User
 exports.getUserInfo = async (req, res) => {};
 

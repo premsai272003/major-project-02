@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AuthLayout from '../../components/layouts/AuthLayout'
-import { useNavigate, Link } from 'react-router-dom';   // ✅ Added Link import
+import { useNavigate, Link } from 'react-router-dom';   
 import Input from '../../components/inputs/input';
 import { validateEmail } from "../../utils/helper";
 
@@ -11,9 +11,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // Handle login Form Submit
+  
   const handleLogin = async (e) => {
-    e.preventDefault(); // ✅ prevent page reload
+    e.preventDefault(); 
     
     if(!validateEmail(email)) {
       setError("please enter the valid email address");
@@ -27,7 +27,7 @@ const Login = () => {
 
     setError("");
 
-    //Login API Call 
+    
   }
 
   return (
@@ -55,7 +55,6 @@ const Login = () => {
             type="password"
           />
 
-          {/* ✅ Show error only if exists */}
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
           <button
@@ -65,7 +64,6 @@ const Login = () => {
             Login
           </button>
 
-          {/* ✅ Fixed typo (slate instead of salte) */}
           <p className="text-[13px] text-slate-800 mt-3">
             Don&apos;t have an account?{" "}
             <Link className="font-medium text-primary underline" to="/signup">

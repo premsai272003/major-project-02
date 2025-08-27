@@ -25,7 +25,7 @@ const AuthLayout = ({ children }) => {
           <StatsInfoCard 
             icon={<LuTrendingUpDown />}
             label="Track Your Income & Expenses"
-            value="430,000"
+            value="00"
             color="bg-primary"
           />
         </div>

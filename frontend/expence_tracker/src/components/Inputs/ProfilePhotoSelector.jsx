@@ -8,9 +8,9 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file); // ✅ update image state
+      setImage(file); 
       const preview = URL.createObjectURL(file);
-      setPreviewUrl(preview); // ✅ show preview
+      setPreviewUrl(preview); 
     }
   };
 
@@ -28,7 +28,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
       <input
         type="file"
         accept="image/*"
-        ref={inputRef} // ✅ fixed (was `re={inputRef}`)
+        ref={inputRef} 
         onChange={handleImageChange}
         className="hidden"
       />
