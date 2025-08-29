@@ -28,6 +28,8 @@ connectDB();
 
 app.use("/api/v1/auth", authRoutes);
 
+app.use('/uploads', express.static(path.join(__dirname, "uploads")));
+
 // Routes (example)
 app.get("/", (req, res) => {
     res.send("API is running...");
@@ -43,15 +45,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
-/*
-Purpose of this file:
-- Load environment variables (dotenv)
-- Setup Express server
-- Enable CORS
-- Secure app with Helmet
-- Parse JSON requests
-- Connect MongoDB using Mongoose
-- Define routes
-- Handle errors globally
-- Start the server
-*/
+
