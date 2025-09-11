@@ -1,9 +1,12 @@
 const xlsx = require("xlsx");
 const Income = require("../models/Income");
+const mongoose = require("mongoose"); // <-- ADDED (only change)
 
 // Add Income Source
 exports.addIncome = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId); // <-- ADDED (only change)
+
     try {
         const { icon, source, amount, date } = req.body;
 
@@ -13,27 +16,28 @@ exports.addIncome = async (req, res) => {
         }
 
         const newIncome = new Income({
-            userId,
-            icon,
-            source,
-            amount,
-            date: new Date(date)
-        });
+    userId: new mongoose.Types.ObjectId(userId),  // ensure ObjectId
+    icon,
+    source,
+    amount,
+    date: new Date(date)
+});
 
         await newIncome.save();
         res.status(200).json(newIncome);
     
-       } catch (error) {
+    } catch (error) {
         res.status(500).json({ message: "Server Error"});
-       }
+    }
 };
 
 //Get All Income Source
 exports.getAllIncome = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId); // <-- ADDED (only change)
 
     try {
-        const income = await Income.find({ userId }).sort({ date: -1 });
+        const income = await Income.find({ userId: userObjectId }).sort({ date: -1 }); // <-- CHANGED: query by ObjectId
         res.json(income);
     }
     catch (error) {
@@ -43,10 +47,8 @@ exports.getAllIncome = async (req, res) => {
 
 //Delete Income Source
 exports.deleteIncome = async (req, res) => {
-    
-
     try {
-        await  Income.findByIdAndDelete(req.params.id);
+        await Income.findByIdAndDelete(req.params.id);
         res.json({ message: "Income deleted successfuly" });
     } catch (error) {
         res.status(500).json({ message: "Server Error" });
@@ -56,8 +58,10 @@ exports.deleteIncome = async (req, res) => {
 //Download Income Source
 exports.downloadIncomeExcel = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId); // <-- ADDED (only change)
+
     try {
-        const income = await Income.find({ userId }).sort({ date: -1 });
+        const income = await Income.find({ userId: userObjectId }).sort({ date: -1 }); // <-- CHANGED: query by ObjectId
 
         // Prepare data for excel
         const data = income.map((item) => ({
