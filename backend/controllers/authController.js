@@ -10,23 +10,23 @@ const generateToken = (id) => {
 exports.registerUser = async (req, res) => {
     const { fullName, email, password, profileImageUrl } = req.body;
 
-    // Validation: check for missing fields
     if (!fullName || !email || !password) {
-        return res.status(400).json({ message: "All fields are required"});
+        return res.status(400).json({ message: "All fields are required" });
     }
+
     try {
-        // check if email already exists
-        const existingUser = await User.findOne({ email});
+        // Check if email already exists
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "Email already in use"});
+            return res.status(400).json({ message: "Email already in use" });
         }
 
-        // Create the user
+        // Save user
         const user = await User.create({
             fullName,
             email,
             password,
-            profileImageUrl,
+            profileImageUrl: profileImageUrl || null, // optional
         });
 
         res.status(201).json({
@@ -35,18 +35,18 @@ exports.registerUser = async (req, res) => {
             token: generateToken(user._id),
         });
     } catch (err) {
-        res 
-           .status(500)
-           .json({ message: "Error registering user", error: err.message});
+        res.status(500).json({ message: "Error registering user", error: err.message });
     }
 };
 
 // Login User
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
+
     if (!email || !password) {
         return res.status(400).json({ message: "All fields are required" });
     }
+
     try {
         const user = await User.findOne({ email });
         if (!user || !(await user.comparePassword(password))) {
@@ -59,11 +59,10 @@ exports.loginUser = async (req, res) => {
             token: generateToken(user._id),
         });
     } catch (err) {
-         
         res.status(500).json({ message: "Error logging in", error: err.message });
-
     }
 };
+
 // Get User Info
 exports.getUserInfo = async (req, res) => {
     try {
@@ -74,9 +73,7 @@ exports.getUserInfo = async (req, res) => {
         }
 
         res.status(200).json(user);
-    }
-    catch (err) {
-        res.status(500).json({ message: "Error fetching user info", error: err.message});
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching user info", error: err.message });
     }
 };
-

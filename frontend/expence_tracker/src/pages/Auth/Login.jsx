@@ -5,7 +5,7 @@ import Input from '../../components/inputs/input';
 import { validateEmail } from "../../utils/helper";
 import axiosInstance from '../../utils/axiosinstance';
 import { API_PATHS } from '../../utils/apiPaths';
-import { UserContext } from '../../context/userContext'; // kept
+import { UserContext } from "../../context/userContext"; // ✅ fixed lowercase
 
 const Login = () => {
   const [email, setEmail] = useState("");
