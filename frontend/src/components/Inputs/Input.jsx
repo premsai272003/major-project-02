@@ -10,7 +10,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
 
   return (
     <div className="w-full mb-4">
-      {/* ✅ Fixed label visibility */}
+      {/*  Fixed label visibility */}
       <label className="block mb-1 text-[13px] text-slate-800">{label}</label>
 
       <div className="flex items-center border rounded-md px-2 py-1">

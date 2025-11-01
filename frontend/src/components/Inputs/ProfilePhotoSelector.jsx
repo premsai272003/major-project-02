@@ -35,7 +35,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
 
       {!image ? (
         <div className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full relative">
-          {/* ✅ fixed className typo (item-center → items-center, bg-purole-100 → bg-purple-100) */}
+          {/*  fixed className typo (item-center → items-center, bg-purole-100 → bg-purple-100) */}
           <LuUser className="text-4xl text-primary" />
 
           <button
@@ -47,7 +47,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
           </button>
         </div>
       ) : (
-        <div className="relative"> {/* ✅ fixed (calssName → className) */}
+        <div className="relative"> {/*  fixed (calssName → className) */}
           <img
             src={previewUrl}
             alt="profile photo"
