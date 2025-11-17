@@ -18,6 +18,7 @@ import Last30DaysExpenses from "../../components/Dashboard/Last30DaysExpenses";
 // ✅ Missing import added
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
+import { toast } from "react-hot-toast";
 
 
 const Home = () => {
@@ -43,6 +44,7 @@ const Home = () => {
   }
 } catch (error) {
   console.log("Something went wrong. Please try again.", error);
+  toast.error("Failed to load dashboard data. Please try again.");
 } finally {
   setLoading(false);
 }

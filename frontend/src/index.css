@@ -13,32 +13,100 @@
     }
 
     body {
-        background-color: #fcfbfc;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         overflow-x: hidden;
-        transition: background-color 0.3s ease;
+        transition: background 0.3s ease;
     }
 
     .dark body {
-        background-color: #1a1a1a;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     }
 }
 
-.input-box {
-    @apply w-full flex justify-between gap-3 text-sm text-black bg-slate-100 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none dark:text-white dark:bg-gray-700 dark:border-gray-600;
+@layer components {
+    .input-box {
+        @apply w-full flex justify-between gap-3 text-sm text-black bg-white/80 backdrop-blur-sm rounded-xl px-4 py-3 mb-4 mt-3 border border-white/20 outline-none shadow-lg hover:shadow-xl transition-all duration-300 dark:text-white dark:bg-gray-800/80 dark:border-gray-600/50;
+    }
+
+    .btn-primary {
+        @apply w-full text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg p-[10px] rounded-xl my-1 hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out transform;
+    }
+
+    .btn-secondary {
+        @apply w-full text-sm font-medium text-gray-700 bg-white/80 backdrop-blur-sm shadow-lg p-[10px] rounded-xl my-1 hover:bg-white hover:shadow-xl transition-all duration-300 dark:text-gray-300 dark:bg-gray-800/80 dark:border-gray-600;
+    }
+
+    .card {
+        @apply bg-white/90 backdrop-blur-md p-6 rounded-3xl shadow-lg border border-white/20 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 dark:bg-gray-800/90 dark:border-gray-700/50 dark:shadow-gray-900/50;
+    }
+
+    .card-btn{
+        @apply flex items-center gap-3 text-[12px] font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-xl border border-gray-200/50 cursor-pointer transition-all duration-300 hover:shadow-md dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-600;
+    }
+
+    .glass-effect {
+        @apply backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 rounded-2xl;
+    }
+
+    .gradient-text {
+        @apply bg-gradient-to-r from-purple-600 to-purple-900 bg-clip-text text-transparent;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.4s ease-out;
+    }
+
+    .animate-bounce-subtle {
+        animation: bounceSubtle 2s infinite;
+    }
 }
 
-.btn-primary {
-    @apply w-full text-sm font-medium text-white bg-violet-600 shadow-lg  shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-purple-600/15 hover:text-purple-600;
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 }
 
-.btn-secondary {
-    @apply w-full text-sm font-medium text-white bg-gray-600 shadow-lg shadow-gray-600/5 p-[10px] rounded-md my-1 hover:bg-gray-600/15 hover:text-gray-600;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.card {
-    @apply bg-white p-6 rounded-2xl shadow-gray-100 border border-gray-200/50 dark:bg-gray-800 dark:border-gray-700 dark:shadow-gray-900;
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.card-btn{
-    @apply flex items-center gap-3 text-[12px] font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-600;
+@keyframes bounceSubtle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
 }
