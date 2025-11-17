@@ -1,9 +1,11 @@
 const xlsx = require("xlsx");
 const Expense = require("../models/Expense");
+const mongoose = require("mongoose");
 
 // Add Expense Source
 exports.addExpense = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId);
     try {
         const { icon, category, amount, date } = req.body;
 
@@ -13,7 +15,7 @@ exports.addExpense = async (req, res) => {
         }
 
         const newExpense = new Expense({
-            userId,
+            userId: userObjectId,
             icon,
             category,
             amount,
@@ -31,9 +33,10 @@ exports.addExpense = async (req, res) => {
 // Get All Expense Source
 exports.getAllExpense = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId);
 
     try {
-        const expense = await Expense.find({ userId }).sort({ date: -1 });
+        const expense = await Expense.find({ userId: userObjectId }).sort({ date: -1 });
         res.json(expense);
     }
     catch (error) {
@@ -54,8 +57,9 @@ exports.deleteExpense = async (req, res) => {
 // Download Expense Excel
 exports.downloadExpenseExcel = async (req, res) => {
     const userId = req.user.id;
+    const userObjectId = new mongoose.Types.ObjectId(userId);
     try {
-        const expense = await Expense.find({ userId }).sort({ date: -1 });
+        const expense = await Expense.find({ userId: userObjectId }).sort({ date: -1 });
 
         // Prepare data for excel
         const data = expense.map((item) => ({

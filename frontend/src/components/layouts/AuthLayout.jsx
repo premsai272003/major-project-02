@@ -8,7 +8,7 @@ const AuthLayout = ({ children }) => {
       
       {/* Left side: Form */}
       <div className="w-full md:w-[60vw] px-6 md:px-12 pt-8 pb-12 flex flex-col">
-        <h2 className="text-2xl font-bold text-black mb-6">Expense Tracker</h2>
+        <h2 className="text-2xl font-bold text-black dark:text-white mb-6">Expense Tracker</h2>
         {children}
       </div>
 
@@ -47,15 +47,15 @@ export default AuthLayout;
 /* StatsInfoCard Component */
 const StatsInfoCard = ({ icon, label, value, color }) => {
   return (
-    <div className="flex gap-4 bg-white p-4 rounded-xl shadow-md border border-gray-200/50 z-10 items-center">
+    <div className="flex gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200/50 dark:border-gray-700 z-10 items-center">
       <div
         className={`w-12 h-12 flex items-center justify-center text-2xl text-white ${color} rounded-full drop-shadow-xl`}
       >
         {icon}
       </div>
       <div>
-        <h6 className="text-xs text-gray-500 mb-1">{label}</h6>
-        <span className="text-lg font-semibold">{value}</span>
+        <h6 className="text-xs text-gray-500 dark:text-gray-400 mb-1">{label}</h6>
+        <span className="text-lg font-semibold text-black dark:text-white">{value}</span>
       </div>
     </div>
   );

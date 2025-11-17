@@ -1,9 +1,74 @@
-import React from 'react'
+import React from "react";
 
-const CustomPiChart = () => {
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import CustomTooltip from "./CustomTooltip";  // ✅ import added
+import CustomLegend from "./CustomLegend";    // ✅ import added
+
+const CustomPiChart = ({
+  data,
+  label,
+  totalAmount,
+  colors,
+  showTextAnchor,
+}) => {
   return (
-    <div>CustomPiChart</div>
-  )
-}
+    <ResponsiveContainer width="100%" height={380}>
+      <PieChart>
+        <Pie
+          data={data}
+          dataKey="amount"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={130}
+          innerRadius={100}
+          labelLine={false}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))}
+        </Pie>
 
-export default CustomPiChart
+        <Tooltip content={<CustomTooltip />} />   {/* ✅ fixed syntax */}
+        <Legend content={<CustomLegend />} />     {/* ✅ fixed syntax */}
+
+        {showTextAnchor && (
+          <>
+            <text
+              x="50%"
+              y="50%"
+              dy={-25}
+              textAnchor="middle"
+              fill="#666"
+              fontSize="14px"
+              className="fill-gray-600 dark:fill-gray-300"
+            >
+              {label}
+            </text>
+            <text
+              x="50%"
+              y="50%"
+              dy={8}
+              textAnchor="middle"
+              fill="#333"
+              fontSize="24px"
+              fontWeight="600"
+              className="fill-gray-900 dark:fill-white"
+            >
+              {totalAmount}
+            </text>
+          </>
+        )}
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};
+
+export default CustomPiChart;

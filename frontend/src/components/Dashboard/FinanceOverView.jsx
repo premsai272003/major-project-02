@@ -14,7 +14,7 @@ const FinanceOverView = ({ totalBalance, totalIncome, totalExpense }) => {
     <div className="card p-4 shadow-md rounded-2xl">
       <div className="flex items-center justify-between mb-4">
         {/* ❌ You had an extra quote in className */}
-        <h5 className="text-lg font-semibold text-gray-800">
+        <h5 className="text-lg font-semibold text-gray-800 dark:text-white">
           Financial Overview
         </h5>
       </div>
@@ -23,7 +23,7 @@ const FinanceOverView = ({ totalBalance, totalIncome, totalExpense }) => {
       <CustomPiChart
         data={balanceData}
         label="Total Balance"
-        totalAmount={`$${totalBalance}`}
+        totalAmount={`₹${totalBalance}`}
         colors={COLORS}
         showTextAnchor={true}
       />

@@ -11,13 +11,13 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
   return (
     <div className="w-full mb-4">
       {/*  Fixed label visibility */}
-      <label className="block mb-1 text-[13px] text-slate-800">{label}</label>
+      <label className="block mb-1 text-[13px] text-slate-800 dark:text-white">{label}</label>
 
-      <div className="flex items-center border rounded-md px-2 py-1">
+      <div className="flex items-center border border-black rounded-md px-2 py-1 bg-white">
         <input
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
           placeholder={placeholder}
-          className="w-full bg-transparent outline-none"
+          className="w-full bg-transparent outline-none text-black placeholder-gray-500"
           value={value}
           onChange={onChange}
         />
@@ -35,6 +35,11 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
               onClick={toggleShowPassword}
             />
           )
+        )}
+        {type === "date" && (
+          <div className="text-blue-500 cursor-pointer">
+            
+          </div>
         )}
       </div>
     </div>

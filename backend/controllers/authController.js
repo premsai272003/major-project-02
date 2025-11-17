@@ -29,6 +29,13 @@ exports.registerUser = async (req, res) => {
             profileImageUrl: profileImageUrl || null, // optional
         });
 
+        // If profileImageUrl is provided, construct full URL
+        if (user.profileImageUrl) {
+            user.profileImageUrl = `${req.protocol}://${req.get("host")}${user.profileImageUrl}`;
+        } else {
+            user.profileImageUrl = null;
+        }
+
         res.status(201).json({
             id: user._id,
             user,
@@ -53,6 +60,11 @@ exports.loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
+        // If profileImageUrl exists, construct full URL
+        if (user.profileImageUrl) {
+            user.profileImageUrl = `${req.protocol}://${req.get("host")}${user.profileImageUrl}`;
+        }
+
         res.status(200).json({
             id: user._id,
             user,
@@ -70,6 +82,11 @@ exports.getUserInfo = async (req, res) => {
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
+        }
+
+        // If profileImageUrl exists, construct full URL
+        if (user.profileImageUrl) {
+            user.profileImageUrl = `${req.protocol}://${req.get("host")}${user.profileImageUrl}`;
         }
 
         res.status(200).json(user);

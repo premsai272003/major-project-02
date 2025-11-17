@@ -1,11 +1,11 @@
 const xlsx = require("xlsx");
 const Income = require("../models/Income");
-const mongoose = require("mongoose"); // <-- ADDED (only change)
+const mongoose = require("mongoose");
 
 // Add Income Source
 exports.addIncome = async (req, res) => {
     const userId = req.user.id;
-    const userObjectId = new mongoose.Types.ObjectId(userId); // <-- ADDED (only change)
+    const userObjectId = new mongoose.Types.ObjectId(userId);
 
     try {
         const { icon, source, amount, date } = req.body;
@@ -16,7 +16,7 @@ exports.addIncome = async (req, res) => {
         }
 
         const newIncome = new Income({
-    userId: new mongoose.Types.ObjectId(userId),  // ensure ObjectId
+    userId: userObjectId,
     icon,
     source,
     amount,
@@ -25,7 +25,7 @@ exports.addIncome = async (req, res) => {
 
         await newIncome.save();
         res.status(200).json(newIncome);
-    
+
     } catch (error) {
         res.status(500).json({ message: "Server Error"});
     }
