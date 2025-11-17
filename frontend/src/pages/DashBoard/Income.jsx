@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 // FIX: Corrected import to use the proper export name with Lu prefix
 import { LuPlus, LuDownload, LuFilter, LuLoader as Loader2} from "react-icons/lu";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 // FIX: Corrected component path from ../../components/Income/ to ../../components/Dashboard/Income/
 import AddIncomeModal from "../../components/Modals/AddIncomeModal";
@@ -47,8 +48,10 @@ const Income = () => {
  await axiosInstance.post(API_PATHS.INCOME.ADD, income);
  fetchIncomeDetails();
  setOpenAddIncomeModal(false);
+ toast.success("Income added successfully!");
  } catch (error) {
  console.error("Failed to add income:", error);
+ toast.error("Failed to add income. Please try again.");
  }
  };
 

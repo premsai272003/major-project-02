@@ -74,13 +74,15 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black dark:text-white">Create an Account</h3>
-        <p className="text-xs text-slate-700 dark:text-gray-300 mt-[5px] mb-6">
-          Join us today by entering your details below
-        </p>
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create an Account</h3>
+          <p className="text-gray-600 dark:text-gray-400">
+            Join us today by entering your details below
+          </p>
+        </div>
 
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} className="space-y-6">
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -88,7 +90,7 @@ const SignUp = () => {
               value={fullName}
               onChange={({ target }) => setFullName(target.value)}
               label="Full Name"
-              placeholder="John"
+              placeholder="Enter your full name"
               type="text"
             />
 
@@ -96,8 +98,8 @@ const SignUp = () => {
               value={email}
               onChange={({ target }) => setEmail(target.value)}
               label="Email Address"
-              placeholder="john@example.com"
-              type="text"
+              placeholder="Enter your email address"
+              type="email"
             />
 
             <div className="col-span-2">
@@ -105,24 +107,36 @@ const SignUp = () => {
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
                 label="Password"
-                placeholder="Enter your password"
+                placeholder="Create a strong password"
                 type="password"
               />
             </div>
           </div>
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+              <p className="text-red-600 dark:text-red-400 text-sm text-center">{error}</p>
+            </div>
+          )}
 
-          <button type="submit" className="btn-primary">
-            SIGN UP
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          >
+            Create Account
           </button>
 
-          <p className="text-[13px] text-slate-800 mt-3">
-            Already have an account?{" "}
-            <Link className="font-medium text-primary underline" to="/login">
-              Login
-            </Link>
-          </p>
+          <div className="text-center">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              Already have an account?{" "}
+              <Link
+                className="font-semibold text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors duration-200"
+                to="/login"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </AuthLayout>

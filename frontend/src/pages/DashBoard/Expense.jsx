@@ -6,6 +6,7 @@ import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/UserContext';
 import { LuPlus, LuDownload, LuFilter, LuLoader as LuLoader2 } from 'react-icons/lu';
 import moment from 'moment';
+import toast from 'react-hot-toast';
 
 // Import the new components
 import AddExpenseModal from '../../components/Modals/AddExpenseModal';
@@ -49,10 +50,11 @@ const Expense = () => {
       if (response.data) {
         fetchExpenseDetails(); // Refresh data
         setOpenAddExpenseModal(false); // Close modal
+        toast.success("Expense added successfully!");
       }
     } catch (error) {
       console.error("Failed to add expense:", error);
-      // Show error in modal
+      toast.error("Failed to add expense. Please try again.");
     }
   };
 

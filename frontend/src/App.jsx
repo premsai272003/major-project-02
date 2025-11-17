@@ -6,6 +6,7 @@ import {
  Route,
  Navigate,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/DashBoard/Home";
@@ -31,6 +32,16 @@ const App = () => {
  <Route path="/expense" element={<Expense />} />
  <Route path="/download" element={<Download />} />
  </Routes>
+ <Toaster
+ position="top-center"
+ toastOptions={{
+ duration: 4000,
+ style: {
+ background: '#363636',
+ color: '#fff',
+ },
+ }}
+ />
  </Router>
  </UserProvider>
  </ThemeProvider>

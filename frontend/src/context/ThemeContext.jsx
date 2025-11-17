@@ -14,7 +14,20 @@ const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  // Toggle theme
+  // Set specific theme
+  const setLightMode = () => {
+    setTheme("light");
+    localStorage.setItem("theme", "light");
+    document.documentElement.classList.remove("dark");
+  };
+
+  const setDarkMode = () => {
+    setTheme("dark");
+    localStorage.setItem("theme", "dark");
+    document.documentElement.classList.add("dark");
+  };
+
+  // Toggle theme (for backward compatibility)
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -27,7 +40,7 @@ const ThemeProvider = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setLightMode, setDarkMode }}>
       {children}
     </ThemeContext.Provider>
   );

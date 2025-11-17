@@ -55,19 +55,21 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black dark:text-white">Welcome back</h3>
-        <p className="text-xs text-slate-900 dark:text-gray-300 mt-[9px] mb-6">
-          Please enter your details to login
-        </p>
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome back</h3>
+          <p className="text-gray-600 dark:text-gray-400">
+            Please enter your details to login
+          </p>
+        </div>
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="space-y-6">
           <Input
             value={email}
             onChange={({ target }) => setEmail(target.value)}
             label="Email Address"
-            placeholder="example@example.com"
-            type="email" // better to use email
+            placeholder="john@example.com"
+            type="email"
           />
 
           <Input
@@ -78,18 +80,30 @@ const Login = () => {
             type="password"
           />
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+              <p className="text-red-600 dark:text-red-400 text-sm text-center">{error}</p>
+            </div>
+          )}
 
-          <button type="submit" className="btn-primary">
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          >
             Login
           </button>
 
-          <p className="text-[13px] text-slate-800 mt-3">
-            Don&apos;t have an account?{" "}
-            <Link className="font-medium text-primary underline" to="/signup">
-              SignUp
-            </Link>
-          </p>
+          <div className="text-center">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              Don&apos;t have an account?{" "}
+              <Link
+                className="font-semibold text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors duration-200"
+                to="/signup"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </AuthLayout>

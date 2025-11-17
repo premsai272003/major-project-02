@@ -5,7 +5,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Navbar = ({ activeMenu }) => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, setLightMode, setDarkMode } = useContext(ThemeContext);
 
   return (
     <div className="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200/50 dark:border-gray-700 py-4 px-7 sticky top-0 z-30">
@@ -27,17 +27,31 @@ const Navbar = ({ activeMenu }) => {
         <h2 className="text-lg font-medium text-black dark:text-white">Expense Tracker</h2>
       </div>
 
-      {/* Right Section: Theme Toggle */}
-      <button
-        onClick={toggleTheme}
-        className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-      >
-        {theme === "light" ? (
-          <HiOutlineMoon className="text-xl" />
-        ) : (
+      {/* Right Section: Separate Light and Dark Mode Buttons */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={setLightMode}
+          className={`p-2 rounded-lg transition-colors ${
+            theme === "light"
+              ? "bg-primary text-white shadow-lg"
+              : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+          }`}
+          title="Light Mode"
+        >
           <HiOutlineSun className="text-xl" />
-        )}
-      </button>
+        </button>
+        <button
+          onClick={setDarkMode}
+          className={`p-2 rounded-lg transition-colors ${
+            theme === "dark"
+              ? "bg-primary text-white shadow-lg"
+              : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+          }`}
+          title="Dark Mode"
+        >
+          <HiOutlineMoon className="text-xl" />
+        </button>
+      </div>
 
       {/* Mobile Side Menu (Drawer) */}
       {openSideMenu && (
