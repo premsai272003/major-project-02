@@ -12,9 +12,9 @@ import toast from "react-hot-toast";
 // FIX: Corrected component path from ../../components/Income/ to ../../components/Dashboard/Income/
 import AddIncomeModal from "../../components/Modals/AddIncomeModal";
 import FilterModal from "../../components/Modals/FilterModal";
+import DownloadModal from "../../components/Modals/DownloadModal";
 import IncomeOverview from "../../components/Income/IncomeOverview";
 import TransactionInfoCard from "../../components/Cards/TransactionInfoCard";
-import { exportToCSV } from "../../utils/helper";
 
 const Income = () => {
  useUserAuth();
@@ -24,9 +24,19 @@ const Income = () => {
  const [loading, setLoading] = useState(false);
  const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
  const [openFilterModal, setOpenFilterModal] = useState(false);
- const [startDate, setStartDate] = useState('');
- const [endDate, setEndDate] = useState('');
- // Fetch All Income Details
+ const [openDownloadModal, setOpenDownloadModal] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  // Filtered data for display and download
+  const filteredIncomeData = startDate && endDate ? incomeData.filter(income => {
+    const incomeDate = new Date(income.date);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return incomeDate >= start && incomeDate <= end;
+  }) : incomeData;
+
+  // Fetch All Income Details
  const fetchIncomeDetails = async () => {
  if (loading) return;
  setLoading(true);
@@ -66,19 +76,7 @@ const Income = () => {
  }
  };
 
- // CSV Download
- const handleDownloadIncomeDetails = () => {
-    if (incomeData.length === 0) {
-      alert("No data to download!");
-      return;
-    }
- const dataToExport = incomeData.map((inc) => ({
- Source: inc.source,
- Amount: inc.amount,
- Date: moment(inc.date).format("DD-MM-YYYY"),
- }));
- exportToCSV(dataToExport, "my_income.csv");
- };
+
 
  // Handle Filter
  const handleApplyFilter = (newStartDate, newEndDate) => {
@@ -126,7 +124,7 @@ return (
  Filter
  </button>
  <button
- onClick={handleDownloadIncomeDetails}
+ onClick={() => setOpenDownloadModal(true)}
  className="flex items-center gap-2 text-sm text-primary font-medium py-2 px-4 rounded-lg hover:bg-purple-50"
 >
  <LuDownload size={18} />
@@ -158,29 +156,37 @@ Add Income
  </div>
  )}
 
- {/* Income List */}
- {!loading && incomeData.length > 0 ? (
- incomeData.map((income) => (
- <TransactionInfoCard
- key={income._id}
- title={income.source}
- icon={income.icon}
- date={moment(income.date).format("DD MMM YYYY")}
- amount={income.amount}
- type="income"
- onDelete={() => deleteIncome(income._id)}
- />
+  {/* Income List */}
+  {!loading && filteredIncomeData.length > 0 ? (
+  filteredIncomeData.map((income) => (
+  <TransactionInfoCard
+  key={income._id}
+  title={income.source}
+  icon={income.icon}
+  date={moment(income.date).format("DD MMM YYYY")}
+  amount={income.amount}
+  type="income"
+  onDelete={() => deleteIncome(income._id)}
+  />
 ))
 ) : (
- !loading && (
- <p className="text-gray-500 text-sm text-center p-6">
- No income found. Click "Add Income" to get started.
- </p>
- )
- )}
+  !loading && (
+  <p className="text-gray-500 text-sm text-center p-6">
+  No income found. Click "Add Income" to get started.
+  </p>
+  )
+  )}
  </div>
  </div>
- </div>
+  </div>
+  {openDownloadModal && (
+    <DownloadModal
+      isOpen={openDownloadModal}
+      onClose={() => setOpenDownloadModal(false)}
+      data={filteredIncomeData}
+      type="income"
+    />
+  )}
  </DashboardLayout>
 );
 };

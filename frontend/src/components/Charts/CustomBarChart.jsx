@@ -14,7 +14,20 @@ import {
 // removed unused CustomTooltip import (you already use a local tooltip below)
 
 const CustomBarChart = ({ data = [] }) => {
-  const getBarColor = (index) => (index % 2 === 0 ? "#875cf5" : "#cfbefb");
+  const colors = [
+    "#875cf5", // Purple
+    "#cfbefb", // Light purple
+    "#f59e0b", // Amber
+    "#10b981", // Emerald
+    "#ef4444", // Red
+    "#3b82f6", // Blue
+    "#8b5cf6", // Violet
+    "#06b6d4", // Cyan
+    "#84cc16", // Lime
+    "#f97316", // Orange
+  ];
+
+  const getBarColor = (index) => colors[index % colors.length];
 
   const LocalTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {

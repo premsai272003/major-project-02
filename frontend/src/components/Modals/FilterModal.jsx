@@ -21,8 +21,8 @@ const FilterModal = ({ isOpen, onClose, onApplyFilter, type }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className={`relative w-full max-w-md bg-white dark:bg-gray-800 border-4 ${type === 'income' ? 'border-blue-500' : 'border-yellow-500'} rounded-2xl shadow-xl p-6`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in">
+      <div className={`relative w-full max-w-md glass-effect shadow-2xl p-6 animate-slide-up`}>
         <div className="absolute top-4 right-4">
           <button
             onClick={onClose}
