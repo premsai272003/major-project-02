@@ -11,9 +11,9 @@ import toast from 'react-hot-toast';
 // Import the new components
 import AddExpenseModal from '../../components/Modals/AddExpenseModal';
 import FilterModal from '../../components/Modals/FilterModal';
+import DownloadModal from '../../components/Modals/DownloadModal';
 import ExpenseOverview from '../../components/Expense/ExpenseOverview';
 import TransactionInfoCard from '../../components/Cards/TransactionInfoCard';
-import { exportToCSV } from '../../utils/helper'; // We will add this function
 
 const Expense = () => {
   useUserAuth();
@@ -23,8 +23,17 @@ const Expense = () => {
   const [loading, setLoading] = useState(false);
   const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
+  const [openDownloadModal, setOpenDownloadModal] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
+  // Filtered data for display and download
+  const filteredExpenseData = startDate && endDate ? expenseData.filter(expense => {
+    const expenseDate = new Date(expense.date);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return expenseDate >= start && expenseDate <= end;
+  }) : expenseData;
 
   // Fetch All Expense Details
   const fetchExpenseDetails = async () => {
@@ -70,16 +79,7 @@ const Expense = () => {
     }
   };
 
-  // Download Expense Details
-  const handleDownloadExpenseDetails = () => {
-    const dataToExport = expenseData.map(exp => ({
-      Category: exp.category,
-      Amount: exp.amount,
-      Date: moment(exp.date).format("DD-MM-YYYY"),
-      // Add other fields if necessary
-    }));
-    exportToCSV(dataToExport, "my_expenses.csv");
-  };
+
 
   // Handle Filter
   const handleApplyFilter = (newStartDate, newEndDate) => {
@@ -146,7 +146,7 @@ const Expense = () => {
           <div className="flex items-center justify-between mb-4">
             <h5 className="text-lg font-semibold text-gray-800 dark:text-white">All Expenses</h5>
             <button
-              onClick={handleDownloadExpenseDetails}
+              onClick={() => setOpenDownloadModal(true)}
               className="flex items-center gap-2 text-sm text-primary font-medium py-2 px-4 rounded-lg hover:bg-purple-50"
             >
               <LuDownload size={18} />
@@ -160,8 +160,8 @@ const Expense = () => {
                 <LuLoader2 className="animate-spin text-primary" size={32} />
               </div>
             )}
-            {!loading && expenseData.length > 0 ? (
-              expenseData.map((expense) => (
+            {!loading && filteredExpenseData.length > 0 ? (
+              filteredExpenseData.map((expense) => (
                 <TransactionInfoCard
                   key={expense._id}
                   title={expense.category}
@@ -182,6 +182,14 @@ const Expense = () => {
           </div>
         </div>
       </div>
+      {openDownloadModal && (
+        <DownloadModal
+          isOpen={openDownloadModal}
+          onClose={() => setOpenDownloadModal(false)}
+          data={filteredExpenseData}
+          type="expense"
+        />
+      )}
     </DashboardLayout>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBriefcase, FaSearch, FaStar, FaClock } from "react-icons/fa";
+import { FaBriefcase, FaSearch, FaStar, FaClock, FaSignInAlt } from "react-icons/fa";
 
 const AboutUs = () => {
   const navigate = useNavigate();
@@ -10,12 +10,21 @@ const AboutUs = () => {
       
       {/* Header */}
       <header className="bg-white shadow p-4 flex justify-end">
-        <button
-          onClick={() => navigate("/login")}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
-        >
-          Login
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center gap-2 cursor-pointer"
+          >
+            <FaSignInAlt />
+            Login
+          </button>
+          <button
+            onClick={() => navigate("/signup")}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+          >
+            Register
+          </button>
+        </div>
       </header>
 
       {/* Hero Section */}
@@ -40,8 +49,8 @@ const AboutUs = () => {
           </p>
 
           <button
-            onClick={() => navigate("/dashboard")}
-            className="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition"
+            onClick={() => navigate("/login")}
+            className="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition cursor-pointer"
           >
             Get Started
           </button>
