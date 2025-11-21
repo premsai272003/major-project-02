@@ -13,6 +13,7 @@ import Home from "./pages/DashBoard/Home";
 import Income from "./pages/DashBoard/Income";
 import Expense from "./pages/DashBoard/Expense";
 import Download from "./pages/DashBoard/Download";
+import AboutUs from "./pages/AboutUs";
 import UserProvider from "./context/UserContext";
 import ThemeProvider from "./context/ThemeContext";
 
@@ -26,6 +27,7 @@ const App = () => {
  <Route path="/login" element={<Login />} />
  <Route path="/signup" element={<SignUp />} />
  <Route path="/dashboard" element={<Home />} />
+ <Route path="/about-us" element={<AboutUs />} />
 
  {/* The Income and Expense Routes are already here! */}
  <Route path="/income" element={<Income />} />

@@ -1,6 +1,8 @@
 const xlsx = require("xlsx");
 const Income = require("../models/Income");
+const User = require("../models/User");
 const mongoose = require("mongoose");
+const { sendEmail, emailTemplates } = require("../utils/emailService");
 
 // Add Income Source
 exports.addIncome = async (req, res) => {
@@ -24,6 +26,24 @@ exports.addIncome = async (req, res) => {
 });
 
         await newIncome.save();
+
+        // Send email notification
+        try {
+            const user = await User.findById(userObjectId);
+            if (user && user.email) {
+                const subject = "New Income Added";
+                const html = emailTemplates.transactionNotification("Income", {
+                    source: newIncome.source,
+                    amount: newIncome.amount,
+                    date: newIncome.date
+                });
+                await sendEmail(user.email, subject, html);
+            }
+        } catch (emailError) {
+            console.error("Error sending income notification email:", emailError);
+            // Don't fail the request if email fails
+        }
+
         res.status(200).json(newIncome);
 
     } catch (error) {

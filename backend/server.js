@@ -8,13 +8,14 @@ const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const helmet = require("helmet");
+const { initCronJobs } = require("./utils/cronJobs");
 
 const app = express();
 
 // Middleware: CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*", // fallback if CLIENT_URL is missing
+    origin: ["http://localhost:5173", "http://localhost:5174"], // Allow both common Vite ports
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -29,6 +30,9 @@ app.use(express.json());
 
 // Connect to MongoDB
 connectDB();
+
+// Initialize cron jobs
+initCronJobs();
 
 // API routes
 app.use("/api/v1/auth", authRoutes);
