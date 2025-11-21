@@ -13,6 +13,7 @@ const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -32,6 +33,11 @@ const SignUp = () => {
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
+      setError("Please enter a valid phone number.");
       return;
     }
 
@@ -101,6 +107,8 @@ const SignUp = () => {
               placeholder="Enter your email address"
               type="email"
             />
+
+
 
             <div className="col-span-2">
               <Input

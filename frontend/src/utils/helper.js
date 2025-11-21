@@ -5,8 +5,13 @@ import moment from 'moment'; // Required for date formatting in charts
 // ===================================
 
 export const validateEmail = (email) => {
- const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
- return regex.test(email);
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+};
+
+export const validatePhoneNumber = (phone) => {
+  const regex = /^\+?[1-9]\d{1,14}$/; // Basic international phone number regex
+  return regex.test(phone);
 };
 
 export const getInitials = (name) => {

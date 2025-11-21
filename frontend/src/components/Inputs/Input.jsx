@@ -45,6 +45,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : type === 'password' ? 'current-password' : 'off'}
         />
 
         <div className="ml-2 flex-shrink-0">
