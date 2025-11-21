@@ -9,10 +9,7 @@ export const validateEmail = (email) => {
   return regex.test(email);
 };
 
-export const validatePhoneNumber = (phone) => {
-  const regex = /^\+?[1-9]\d{1,14}$/; // Basic international phone number regex
-  return regex.test(phone);
-};
+
 
 export const getInitials = (name) => {
  if (!name) return "";

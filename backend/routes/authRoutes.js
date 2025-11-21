@@ -14,7 +14,7 @@ router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
 
 // Upload profile image
-router.post("/upload-image", protect, upload.single("image"), async (req, res) => {
+router.post("/upload-image", upload.single("image"), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
     }
@@ -22,19 +22,13 @@ router.post("/upload-image", protect, upload.single("image"), async (req, res) =
     const imageUrl = `/uploads/${req.file.filename}`;
 
     try {
-        const user = await User.findByIdAndUpdate(
-            req.user._id,
-            { profileImageUrl: imageUrl },
-            { new: true }
-        ).select("-password");
-
+        // For signup, we don't have a user yet, so just return the image URL
         res.status(200).json({
             message: "Image uploaded successfully",
-            imageUrl: `${req.protocol}://${req.get("host")}${imageUrl}`,
-            user,
+            imageUrl: imageUrl,  // return relative path
         });
     } catch (error) {
-        res.status(500).json({ message: "Error saving image", error: error.message });
+        res.status(500).json({ message: "Error uploading image", error: error.message });
     }
 });
 

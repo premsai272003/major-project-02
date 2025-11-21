@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import Input from "../../components/inputs/input";
 import axiosInstance from "../../utils/axiosinstance";
 import { API_PATHS } from "../../utils/apiPaths";
+
 
 const Download = () => {
   const [startDate, setStartDate] = useState("");
@@ -27,17 +28,13 @@ const Download = () => {
     try {
       const response = await axiosInstance.get(
         `${API_PATHS.DASHBOARD.DOWNLOAD}?startDate=${startDate}&endDate=${endDate}`,
-        {
-          responseType: "blob", // Important for file download
-        }
+        { responseType: "blob" }
       );
 
-      // Create a blob from the response data
       const blob = new Blob([response.data], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
 
-      // Create a link element and trigger download
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -57,7 +54,10 @@ const Download = () => {
   return (
     <DashboardLayout activeMenu="Download">
       <div className="my-5 mx-auto">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm relative">
+
+
+
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
             Download Transactions
           </h2>
@@ -88,9 +88,7 @@ const Download = () => {
             </div>
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm mb-4">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           <button
             onClick={handleDownload}

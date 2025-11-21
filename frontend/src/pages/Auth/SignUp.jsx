@@ -3,10 +3,10 @@ import AuthLayout from "../../components/layouts/AuthLayout";
 import { useNavigate, Link } from "react-router-dom";
 import Input from "../../components/inputs/input";
 import { validateEmail } from "../../utils/helper";
-import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector"; 
-import axiosInstance from "../../utils/axiosinstance";
+import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector";
+import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { UserContext } from "../../context/userContext"; //  fixed lowercase
+import { UserContext } from "../../context/UserContext";
 import uploadImage from "../../utils/uploadImage";
 
 const SignUp = () => {
@@ -36,10 +36,7 @@ const SignUp = () => {
       return;
     }
 
-    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
-      setError("Please enter a valid phone number.");
-      return;
-    }
+
 
     if (!password) {
       setError("Please enter the password");

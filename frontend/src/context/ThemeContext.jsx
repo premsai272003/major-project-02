@@ -5,7 +5,6 @@ export const ThemeContext = createContext();
 const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
 
-  // Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
@@ -14,7 +13,6 @@ const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  // Set specific theme
   const setLightMode = () => {
     setTheme("light");
     localStorage.setItem("theme", "light");
@@ -27,11 +25,11 @@ const ThemeProvider = ({ children }) => {
     document.documentElement.classList.add("dark");
   };
 
-  // Toggle theme (for backward compatibility)
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
+
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
